@@ -11,7 +11,7 @@
 		  	function initMap() {
 				map = new google.maps.Map(document.getElementById('map'), {
 					center: {lat: 14.3783, lng:  24.9042},
-					zoom: 16,
+					zoom: 7,
 					mapTypeId: google.maps.MapTypeId.SATELLITE
 				});
 				
@@ -71,11 +71,12 @@
 			}
 
 			
-			function newMapCenter(newLat,newLng){
+			function newMapCenterAndZoom(newLat,newLng){
 				map.setCenter({
 					lat : newLat,
 					lng : newLng
 				});
+				map.setZoom(16);
 			}
 
 			function getImageUrl(x,y,z){
@@ -114,7 +115,7 @@
 						$(".tile").attr("src", imageSource);
 						$('.url_info').html(googleUrl);
 						$(".googleUrl").attr("href", googleUrl);
-						newMapCenter(tile2lat(y,z),tile2long(x,z));
+						newMapCenterAndZoom(tile2lat(y,z),tile2long(x,z));
 						showTileOnMap(x, y, z);
 					}			
 				}
