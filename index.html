@@ -8,14 +8,15 @@
 		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js"></script>
 		<script>
 		var map;
-		  	function initMap() {
-				map = new google.maps.Map(document.getElementById('map'), {
-					center: {lat: 14.3783, lng:  24.9042},
-					zoom: 3,
-					mapTypeId: google.maps.MapTypeId.SATELLITE
-				});
-				
-			}
+		var rectangle;
+	  	function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: 14.3783, lng:  24.9042},
+				zoom: 3,
+				mapTypeId: google.maps.MapTypeId.SATELLITE
+			});
+			
+		}
 		$(function(){
 
 		  	function tile2long(x,z) {
@@ -27,6 +28,7 @@
 			}
 
 			function showTileOnMap(x, y, z){
+				rectangle.setMap(null);
 				var lat = tile2lat(y,z);
 				var lat_end = tile2lat(y+1,z);
 				var lng = tile2long(x,z);
@@ -35,7 +37,7 @@
 				$('.lat_info').html(lat);
 				$('.lng_info').html(lng);
 
-				var rectangle = new google.maps.Rectangle({
+				rectangle = new google.maps.Rectangle({
 		            strokeColor: '#FF0000',
 		            strokeOpacity: 1,
 		            strokeWeight: 1,
