@@ -28,7 +28,7 @@
 			}
 
 			function showTileOnMap(x, y, z){
-				rectangle.setMap(null);
+				
 				var lat = tile2lat(y,z);
 				var lat_end = tile2lat(y+1,z);
 				var lng = tile2long(x,z);
@@ -113,7 +113,7 @@
 						alert("Error! One or more parameter values are not valid. Please check x, y and zoom!");
 					}
 					else{
-
+						rectangle.setMap(null);
 						$(".tile").attr("src", imageSource);
 						$('.url_info').html(googleUrl);
 						$(".googleUrl").attr("href", googleUrl);
