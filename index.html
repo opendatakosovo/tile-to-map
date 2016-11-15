@@ -15,8 +15,8 @@
 				zoom: 3,
 				mapTypeId: google.maps.MapTypeId.SATELLITE
 			});
-			
-		}
+		};
+
 		$(function(){
 
 		  	function tile2long(x,z) {
@@ -91,6 +91,12 @@
 				var googleUrl = 'http://maps.google.com/maps?q='+lat+','+lng
 				return googleUrl
 			}
+			function getTerrServerUrl(lat, lng){
+				//https://www.terraserver.com/view?utf8=%E2%9C%93&search_text=&searchLat=&searchLng=&lat=32.249974455863295&lng=98.4375&bbox=&center= 
+				var terraServerUrl = 'https://www.terraserver.com/view?utf8=%E2%9C%93&search_text=&searchLat=&searchLng=&lat='+ lat+ '&lng='+ lng+'&bbox=&center='
+				return terraServerUrl
+
+			}
 			function checkForValidUrl(url) {
 				var image = new Image(); 
 				image.src = url;
@@ -109,16 +115,22 @@
 				if ($("#form").valid() == true){
 					var imageSource = getImageUrl(x,y,z);
 					var googleUrl = getGoogleUrl(tile2lat(y,z),tile2long(x,z));
-					if (checkForValidUrl(imageSource) === true && checkForValidUrl(googleUrl) === true) {
+					var terraServerUrl = getTerrServerUrl(tile2lat(y,z),tile2long(x,z));
+					console.log("URL", terraServerUrl);
+					if (checkForValidUrl(imageSource) === true && checkForValidUrl(googleUrl) === true && checkForValidUrl(terraServerUrl) === true ) {
 						alert("Error! One or more parameter values are not valid. Please check x, y and zoom!");
 					}
 					else{
 
 						$(".tile").attr("src", imageSource);
 						$('.url_info').html(googleUrl);
+						$('.terra_info').html(terraServerUrl);
 						$(".googleUrl").attr("href", googleUrl);
+						$(".terraUrl").attr("href", terraServerUrl);
 						newMapCenterAndZoom(tile2lat(y,z),tile2long(x,z));
 						showTileOnMap(x, y, z);
+
+
 					}			
 				}
 
@@ -158,6 +170,7 @@
 	        <input type="number" class="form-control" id="z" placeholder="z" required>
 	      </div>
 	    </div>
+
         <div class="form-group center">
              <input id="submit" type="button" class="btn btn-primary submit " value="Show location" />
         </div>
@@ -166,9 +179,11 @@
 
 		<img class="tile" src="/tile-to-map/img.png" height="256" width="256">
 		<div class="layerInfo">
-			<p>   <b>Lat </b>:<span class="lat_info"></span> </p>
-			<p>   <b>Lng:</b><span class="lng_info"></span> </p>
-			<p>   <b>Google Url: </b><a href="#" class="googleUrl" target="_blank"><span class="url_info"></span></a> </p>
+			<p><b>Latitude:</b>:<span class="lat_info"></span> </p>
+			<p><b>Longitude:</b><span class="lng_info"></span> </p>
+			<p><b>Google Url: </b><a href="#" class="googleUrl" target="_blank"><span class="url_info"></span></a> </p>
+			<p><b>Terra server:</b><a href="#" target="_blank" class="terraUrl"><span class="terra_info"> </span> </a> </p>
+
 		</div>
 		</div>
 		<div class="col-md-9 map">
@@ -184,7 +199,6 @@
 
 
 <style type="text/css">
-
 	img{
 		float:left;
 	}	
@@ -197,13 +211,16 @@
 	.layerInfo>p{
 		margin-top: 10px;
 	}
-
 	.clear{
 		clear:both;
 	}
 	.map{
 		padding: 20px;	
 	}
-	.submit{ text-align: center; }
-	.tile{ padding: 5px; }
+	.submit{ 
+		text-align: center; 
+	}
+	.tile{ 
+		padding: 5px; 
+	}
  </style> </style>
