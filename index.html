@@ -116,7 +116,6 @@
 					var imageSource = getImageUrl(x,y,z);
 					var googleUrl = getGoogleUrl(tile2lat(y,z),tile2long(x,z));
 					var terraServerUrl = getTerrServerUrl(tile2lat(y,z),tile2long(x,z));
-					console.log("URL", terraServerUrl);
 					if (checkForValidUrl(imageSource) === true && checkForValidUrl(googleUrl) === true && checkForValidUrl(terraServerUrl) === true ) {
 						alert("Error! One or more parameter values are not valid. Please check x, y and zoom!");
 					}
